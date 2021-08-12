@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <title>COVID Wallet</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="container">
+        <br />
+
+        <nav class="navbar navbar-light shadow-lg p-3 mb-5 rounded">
+            <div class="container-fluid">
+                <span class="navbar-text">
+                    <b>COVID Wallet</b>
+                </span>
+            </div>
+        </nav>
+
+        <p>Serviço para converter o <a href="//www.sns24.gov.pt/certificado-digital-covid/#aceder"
+                target="_blank">Certificado Digital COVID</a> num ficheiro possível de ser importado na Wallet em iOS.
+        </p>
+
+        <p>De momento, este serviço apenas suporta o certificado de vacinação português.</p>
+
+        <br />
+
+        <div class="card" id="step1">
+            <div class="card-header">
+                QR Code do Certificado Digital
+            </div>
+            <div class="card-body">
+                <p>Por favor seleccione ou fotografe o QR Code do Certificado Digital.</p>
+                <p>Em alternativa, poderá tirar um screenshot do QR Code do PDF no seu smartphone e fazer upload da
+                    imagem resultante.</p>
+                <input id="image-file" type="file" />
+            </div>
+        </div>
+
+        <div class="card" id="step2" style="display: none;">
+            <div class="card-header">
+                Gerar e Download
+            </div>
+            <div class="card-body">
+                <p>O QR code é válido, e o pass pode agora ser gerado e descarregado.</p>
+                <form action="//api.covidwallet.pt/generate" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" id="data" name="data" value="" />
+                    <input class="btn btn-primary" type="submit" id="submit" value="Gerar Pass Wallet" />
+                </form>
+
+                <br />
+
+                <button id="restart-btn" type="button" class="btn btn-secondary btn-sm">Recomeçar</button>
+            </div>
+        </div>
+
+        <div class="card" id="error" style="display: none;">
+            <div class="card-header">
+                Erro!
+            </div>
+            <div class="card-body">
+                <p>O QR code não foi validado. Por favor tente outra vez com outra imagem.</p>
+
+                <button id="retry-btn" type="button" class="btn btn-danger">Recomeçar</button>
+            </div>
+        </div>
+
+        <br />
+
+        <hr />
+
+        <br />
+
+        <center>
+            &copy; 2021 <a href="//edr.io">Eduardo Almeida</a> &bull; <a href="privacy_policy.html">Política de
+                Privacidade</a>
+        </center>
+    </div>
+</body>
+
+<script type="module">
+    import jsQR from './jsQR.js';
+
+    document.querySelector("#image-file").value = "";
+    document.querySelector("#data").value = "";
+
+    async function imageDataFromSource(source) {
+        const image = Object.assign(new Image(), { src: source });
+        await new Promise(resolve => image.addEventListener('load', () => resolve()));
+        const context = Object.assign(document.createElement('canvas'), {
+            width: image.width,
+            height: image.height
+        }).getContext('2d');
+        context.imageSmoothingEnabled = false;
+        context.drawImage(image, 0, 0);
+        return context.getImageData(0, 0, image.width, image.height);
+    }
+
+    const restartFunction = function () {
+        document.querySelector("#step1").style.display = null;
+        document.querySelector("#step2").style.display = "none";
+        document.querySelector("#error").style.display = "none";
+
+        document.querySelector("#image-file").value = "";
+        document.querySelector("#data").value = "";
+    };
+
+    document.querySelector("#retry-btn").onclick = restartFunction;
+    document.querySelector("#restart-btn").onclick = restartFunction;
+
+    document.querySelector("#image-file").onchange = function () {
+        const reader = new FileReader();
+        reader.addEventListener('load', (event) => {
+            (async function () {
+                const onError = function () {
+                    document.querySelector("#step1").style.display = "none";
+                    document.querySelector("#step2").style.display = "none";
+                    document.querySelector("#error").style.display = null;
+                };
+
+                const data = await imageDataFromSource(event.target.result);
+
+                if (data == null || data.data == null) {
+                    onError();
+
+                    return;
+                }
+
+                const code = jsQR(data.data, data.width, data.height);
+
+                if (code == null) {
+                    onError();
+
+                    return;
+                }
+
+                const qrCodeData = code.data;
+
+                if (!qrCodeData.startsWith("HC1:")) {
+                    onError();
+
+                    return;
+                }
+
+                document.querySelector("#data").value = qrCodeData;
+
+                document.querySelector("#step1").style.display = "none";
+                document.querySelector("#step2").style.display = null;
+                document.querySelector("#error").style.display = "none";
+            })();
+        });
+
+        reader.readAsDataURL(document.querySelector("#image-file").files[0]);
+    };
+</script>
+
+</html>
