@@ -1,3 +1,47 @@
+function getOperatingSystem() {
+    //  Adapted from https://stackoverflow.com/a/38241481
+
+    var userAgent = window.navigator.userAgent,
+        platform = window.navigator.platform,
+        macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+        windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+        iosPlatforms = ['iPhone', 'iPad', 'iPod']
+
+    if (macosPlatforms.indexOf(platform) !== -1) {
+        return 'macOS';
+    } else if (iosPlatforms.indexOf(platform) !== -1) {
+        return 'iOS';
+    } else if (windowsPlatforms.indexOf(platform) !== -1) {
+        return 'Windows';
+    } else if (/Android/.test(userAgent)) {
+        return 'Android';
+    } else if (/Linux/.test(platform)) {
+        return 'Linux';
+    }
+}
+
+switch (getOperatingSystem()) {
+    case 'macOS':
+        document.querySelector("#instructions-macOS").style.display = null;
+
+        break;
+
+    case 'iOS':
+        document.querySelector("#instructions-iOS").style.display = null;
+
+        break;
+
+    case 'Android':
+        document.querySelector("#instructions-android").style.display = null;
+
+        break;
+
+    default:
+        document.querySelector("#instructions-generic").style.display = null;
+
+        break;
+}
+
 document.querySelector("#image-file").value = "";
 document.querySelector("#data").value = "";
 

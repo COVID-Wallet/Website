@@ -55,13 +55,28 @@
         <p>É recomendável abrir o website e efetuar o processo através do smartphone no qual o pass vai ser
             importado/utilizado.</p>
 
-        <p>Estado do serviço por tipo de certificado:</p>
-
-        <ul>
-            <li><strong>Certificado de Vacinação</strong>: 🟢 Funcional;</li>
-            <li><strong>Certificado de Testagem</strong>: 🟡 Provavelmente funcional, não testado;</li>
-            <li><strong>Certificado de Recuperação</strong>: 🟢 Funcional.</li>
-        </ul>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Tipo de Certificado</th>
+                    <th scope="col">Estado do Serviço</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Certificado de Vacinação</td>
+                        <td>🟢 Testado e Funcional</td>
+                    </tr>
+                    <tr>
+                        <td>Certificado de Testagem</td>
+                        <td>🟡 Provavelmente Funcional (não testado)</td>
+                    </tr>
+                    <tr>
+                        <td>Certificado de Recuperação</td>
+                        <td>🟢 Testado e Funcional</td>
+                    </tr>
+                </tbody>
+        </table>
 
         <p>Por favor, reporte quaisquer problemas na geração dos certificados <a
                 href="//github.com/COVID-Wallet/API/issues">aqui</a>.</p>
@@ -91,18 +106,32 @@
             <div class="card-body">
                 <p>O QR code é válido, e o pass pode agora ser gerado e descarregado.</p>
 
-                <ul>
-                    <li><strong>iOS</strong>: O pass será aberto na app Wallet onde poderá ser importado com um
-                        toque. Este também será automaticamente sincronizado para dispositivos Apple Watch emparelhados.
-                    </li>
-                    <li><strong>macOS</strong>: O pass será descarregado, e poderá ser importado para dispositivos iOS
-                        ligados à mesma conta iCloud após ser aberto.</li>
-                    <li><strong>Android</strong>: O pass será descarregado, e poderá ser importado por uma aplicação que
-                        leia/guarde os passes. No caso de não possuir uma instalada no seu smartphone, poderá
-                        descarregar uma da Play Store. A aplicação <a
-                            href="//play.google.com/store/apps/details?id=io.walletpasses.android">WalletPasses</a> é um
-                        exemplo de uma aplicação compatível.</li>
-                </ul>
+                <p id="instructions-iOS" style="display: none;">O pass será aberto na app Wallet onde poderá ser
+                    importado com um
+                    toque. Este também será automaticamente sincronizado para dispositivos Apple Watch
+                    emparelhados e para outros dispositivos iOS ligados à mesma conta iCloud.</p>
+
+                <p id="instructions-macOS" style="display: none;">Um ficheiro com a informação do pass será
+                    descarregado, bastando apenas abrir o mesmo para que este seja sincronizado para todos os
+                    dispositivos iOS e Apple Watch ligados à mesma conta iCloud do Mac.</p>
+
+                <p id="instructions-android" style="display: none;">O pass será descarregado, e poderá ser importado
+                    por uma aplicação que
+                    leia/guarde os passes. No caso de não possuir uma instalada no seu smartphone, poderá
+                    descarregar uma da Play Store. A aplicação <a
+                        href="//play.google.com/store/apps/details?id=io.walletpasses.android">WalletPasses</a> é um
+                    exemplo de uma aplicação compatível.</p>
+
+                <p id="instructions-generic" style="display: none;">O pass será descarregado, e deverá posteriormente
+                    ser transferido para
+                    um dispositivo iOS ou Android. No caso de dispositivos iOS, basta abrir o ficheiro e este será
+                    importado para a Wallet de todos os dispositivos iOS e Apple Watch ligados à mesma conta iCloud. No
+                    caso de dispositivos Android, o ficheiro poderá ser importado por uma
+                    aplicação que
+                    leia/guarde os passes. No caso de não possuir uma instalada no seu smartphone, poderá
+                    descarregar uma da Play Store. A aplicação <a
+                        href="//play.google.com/store/apps/details?id=io.walletpasses.android">WalletPasses</a> é um
+                    exemplo de uma aplicação compatível.</p>
 
                 <form action="//api.covidwallet.pt/generate" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="data" name="data" value="" />
