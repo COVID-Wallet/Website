@@ -54,7 +54,7 @@
 
         <p>É recomendável abrir o website e efetuar o processo através do smartphone no qual o pass vai ser
             importado/utilizado.</p>
-        
+
         <details>
             <summary>Estado do Serviço</summary>
             <br />
@@ -64,28 +64,28 @@
                         <th scope="col">Tipo de Certificado</th>
                         <th scope="col">Estado do Serviço</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Certificado de Vacinação</td>
-                            <td>🟢 Testado e Funcional</td>
-                        </tr>
-                        <tr>
-                            <td>Certificado de Testagem</td>
-                            <td>🟡 Provavelmente Funcional (não testado)</td>
-                        </tr>
-                        <tr>
-                            <td>Certificado de Recuperação</td>
-                            <td>🟢 Testado e Funcional</td>
-                        </tr>
-                    </tbody>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Certificado de Vacinação</td>
+                        <td>🟢 Testado e Funcional</td>
+                    </tr>
+                    <tr>
+                        <td>Certificado de Testagem</td>
+                        <td>🟡 Provavelmente Funcional (não testado)</td>
+                    </tr>
+                    <tr>
+                        <td>Certificado de Recuperação</td>
+                        <td>🟢 Testado e Funcional</td>
+                    </tr>
+                </tbody>
             </table>
 
             <p>Por favor, reporte quaisquer problemas na geração dos certificados <a
-                href="//github.com/COVID-Wallet/API/issues">aqui</a>.</p>
+                    href="//github.com/COVID-Wallet/API/issues">aqui</a>.</p>
         </details>
 
-        
+
 
         <br />
 
@@ -141,9 +141,50 @@
 
                 <form action="//api.covidwallet.pt/generate" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="data" name="data" value="" />
-                    <input type="hidden" name="dosesOverride" value="" />
-                    <input type="hidden" name="shortNameOverride" value="" />
-                    
+
+                    <details>
+                        <summary>Modo Avançado (Overrides)</summary>
+
+                        <br />
+
+                        <p>Utilize os seguintes campos para alterar os valores a ser apresentados no cartão. Deixe os valores em branco para manter os valores lidos do QR code.</p>
+                        <p><span class="orange-text">Apenas altere estes valores se souber exatamente o que está a fazer!</span></p>
+
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                                <label for="dosesOverride" class="col-form-label">Doses</label>
+                            </div>
+                            <div class="col-auto">
+                                <input id="dosesOverride" name="dosesOverride" class="form-control"
+                                    aria-describedby="dosesHelpInline" value="">
+                            </div>
+                            <div class="col-auto">
+                                <span id="dosesHelpInline" class="form-text">
+                                    Numero de doses a ser apresentado na parte da frente do cartão.
+                                </span>
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                                <label for="shortNameOverride" class="col-form-label">Nome</label>
+                            </div>
+                            <div class="col-auto">
+                                <input id="shortNameOverride" name="shortNameOverride" class="form-control"
+                                    aria-describedby="shortNameHelpInline" value="">
+                            </div>
+                            <div class="col-auto">
+                                <span id="shortNameHelpInline" class="form-text">
+                                    Nome a ser apresentado na parte da frente do cartão.
+                                </span>
+                            </div>
+                        </div>
+                    </details>
+
+                    <br />
+
                     <input class="btn btn-primary" type="submit" id="submit" value="Gerar Pass Wallet" />
                 </form>
 

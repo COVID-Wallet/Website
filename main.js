@@ -5,7 +5,7 @@ function getOperatingSystem() {
         platform = window.navigator.platform,
         macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
         windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
-        iosPlatforms = ['iPhone', 'iPad', 'iPod']
+        iosPlatforms = ['iPhone', 'iPad', 'iPod'];
 
     if (macosPlatforms.indexOf(platform) !== -1) {
         return 'macOS';
@@ -104,6 +104,8 @@ document.querySelector("#image-file").onchange = function () {
             }
 
             document.querySelector("#data").value = qrCodeData;
+            document.querySelector("#dosesOverride").value = "";
+            document.querySelector("#shortNameOverride").value = "";
 
             document.querySelector("#step1").style.display = "none";
             document.querySelector("#step2").style.display = null;
