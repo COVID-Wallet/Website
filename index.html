@@ -29,7 +29,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
     <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#00ff00">
+    <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="/assets/ms-icon-144x144.png">
     <meta name="theme-color" content="#00ff00">
 </head>
@@ -110,23 +110,20 @@
                 <form action="//api.covidwallet.pt/generate" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="data" name="data" value="" />
 
-                    <details>
-                        <summary>Modo Avançado (Overrides)</summary>
-
-                        <br />
-
+                    <div id="advanced">
                         <p>Utilize os seguintes campos para alterar os valores a ser apresentados no cartão. Deixe os valores em branco para manter os valores lidos do QR code.</p>
-                        <p><span class="orange-text">Apenas altere estes valores se souber exatamente o que está a fazer!</span></p>
+                        <p>Alterar estes valores não altera os dados no QR code, apenas afeta a parte visual do cartão!</p>
+                        <p><span class="orange-text">⚠️ Apenas altere estes valores se souber exatamente o que está a fazer e tiver uma razão válida para tal!</span></p>
 
                         <div class="row g-3 align-items-center">
-                            <div class="col-auto">
+                            <div class="col-md-1">
                                 <label for="dosesOverride" class="col-form-label">Doses</label>
                             </div>
-                            <div class="col-auto">
+                            <div class="col-md-3">
                                 <input id="dosesOverride" name="dosesOverride" class="form-control"
                                     aria-describedby="dosesHelpInline" value="">
                             </div>
-                            <div class="col-auto">
+                            <div class="col-md-6">
                                 <span id="dosesHelpInline" class="form-text">
                                     Numero de doses a ser apresentado na parte da frente do cartão.
                                 </span>
@@ -136,22 +133,40 @@
                         <br />
 
                         <div class="row g-3 align-items-center">
-                            <div class="col-auto">
+                            <div class="col-md-1">
                                 <label for="shortNameOverride" class="col-form-label">Nome</label>
                             </div>
-                            <div class="col-auto">
+                            <div class="col-md-3">
                                 <input id="shortNameOverride" name="shortNameOverride" class="form-control"
                                     aria-describedby="shortNameHelpInline" value="">
                             </div>
-                            <div class="col-auto">
+                            <div class="col-md-6">
                                 <span id="shortNameHelpInline" class="form-text">
                                     Nome a ser apresentado na parte da frente do cartão.
                                 </span>
                             </div>
                         </div>
-                    </details>
 
-                    <br />
+                        <br />
+
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-1">
+                                <label for="shortNameOverride" class="col-form-label">Lingua</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="radio" id="languageOverridePT" name="languageOverride" value="PT"> <label for="languageOverridePT">🇵🇹 Português</label>
+                                <br />
+                                <input type="radio" id="languageOverrideEN" name="languageOverride" value="EN"> <label for="languageOverrideEN">🇬🇧 Inglês</label>
+                            </div>
+                            <div class="col-md-6">
+                                <span id="shortNameHelpInline" class="form-text">
+                                    Lingua a ser utilizada no cartão.
+                                </span>
+                            </div>
+                        </div>
+
+                        <br />
+                    </div>
 
                     <input class="btn btn-primary" type="submit" id="submit" value="Gerar Pass Wallet" />
                 </form>

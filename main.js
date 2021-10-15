@@ -64,6 +64,10 @@ const restartFunction = function () {
 
     document.querySelector("#image-file").value = "";
     document.querySelector("#data").value = "";
+    document.querySelector("#dosesOverride").value = "";
+    document.querySelector("#languageOverrideEN").checked = false;
+    document.querySelector("#languageOverridePT").checked = false;
+    document.querySelector("#shortNameOverride").value = "";
 };
 
 document.querySelector("#retry-btn").onclick = restartFunction;
@@ -115,3 +119,10 @@ document.querySelector("#image-file").onchange = function () {
 
     reader.readAsDataURL(document.querySelector("#image-file").files[0]);
 };
+
+const urlParams = new URLSearchParams(window.location.search);
+const advancedParam = urlParams.get('advanced');
+
+if (!advancedParam) {
+    document.querySelector("#advanced").hidden = true;
+}
