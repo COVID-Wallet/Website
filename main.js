@@ -17,6 +17,8 @@ function getOperatingSystem() {
         return 'Android';
     } else if (/Linux/.test(platform)) {
         return 'Linux';
+    } else {
+        return null;
     }
 }
 
